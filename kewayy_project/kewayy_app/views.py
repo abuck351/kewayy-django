@@ -1,3 +1,7 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def index(request):
+    context = {}
+    context['name'] = 'Aaron'
+    return render(request, 'kewayy_app/index.html', context)
