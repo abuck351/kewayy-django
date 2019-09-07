@@ -1,0 +1,18 @@
+<!--Sidebar-->
+<div class="col-sm-12 col-md-12 col-xl-2 my-3">
+    <div class="card bg-dark text-white text-center">
+        <div class="card-header">
+            <a class="btn btn-primary btn-lg" href="#">Create Story</a>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Stories</h5>
+            <ul class="list-group mt-2">
+                {% for s in all_stories %}
+                    <li class="list-group-item">
+                        <a href="{% url 'kewayy_app:show_story' s.slug %}">{{ s.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,44 @@
 {% extends 'kewayy_app/base.html' %}
 
 {% block body_block %}
-    <h1>Hello {{ name }}</h1>
+    <div class="row m-2">
+        <div class="col-sm-12 col-md my-2">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    Recent Activity
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="#">Abuckles</a> created <a href="#">DEV-455</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="#">Bob</a> deleted <a href="#">DEV-101</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="#">Abuckles</a> created <a href="#">Regression for DEV-455</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md my-2">
+            <div class="card shadow-sm">
+                <div class="card-header">
+                    Current Tests
+                </div>
+                <div class="card-body">
+                    <p class="lead">These are your recent stories and regression tests</p>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a class="card-link" href="#">DEV-455</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a class="card-link" href="#">Regression for DEV-203</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

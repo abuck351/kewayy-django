@@ -1,0 +1,16 @@
+{% extends 'kewayy_app/base.html' %}
+{% load staticfiles %}
+{% load kewayy_template_tags %}
+
+{% block title_block %}
+    {{ story.name }}
+{% endblock %}
+
+{% block body_block %}
+    <div class="row">
+        {% show_story_sidebar story %}
+        <div class="col my-3">
+            <h1>{{ story.name }}</h1>
+        </div>
+    </div>
+{% endblock %}
