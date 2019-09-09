@@ -3,10 +3,12 @@ from django.utils.text import slugify
 
 
 class Story(models.Model):
-    name_max_length = 128
+    name_max_length = 32
+    description_max_length = 128
     reference_url_max_length = 128
 
     name = models.CharField(max_length=name_max_length, unique=True)
+    description = models.CharField(max_length=description_max_length, null=True)
     # product = models.ForeignKey(Product, on_delete=models.CASCADE)
     reference_url = models.URLField(max_length=reference_url_max_length, null=True)
     slug = models.SlugField(unique=True)

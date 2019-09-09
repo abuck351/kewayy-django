@@ -13,7 +13,9 @@ def show_story(request, story_slug):
 
     # Try to show the Story, except Story.DoesNotExist
     # context['story_slug'] = story_slug
-    context['story'] = Story.objects.get(slug=story_slug)
+    story = Story.objects.get(slug=story_slug)
+    context['story'] = story
+    context['test_cases'] = TestCase.objects.filter(story=story)
 
     return render(request, 'kewayy_app/show_story.html', context)
 

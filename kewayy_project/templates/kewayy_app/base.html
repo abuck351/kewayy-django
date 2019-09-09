@@ -7,8 +7,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Kewayy | {% block title_block %}Home{% endblock %}</title>
 
-        <script src="https://kit.fontawesome.com/42a03310d8.js"></script>
-
         <!--Bootstrap core CSS-->
         <link href="https://getbootstrap.com/docs/4.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     </head>
@@ -16,7 +14,7 @@
     <body>
 
         <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark shadow">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{% url 'kewayy_app:index' %}">
                 <i class="fas fa-paw"></i> Kewayy
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,6 +65,7 @@
         </footer> -->
 
         <!--JavaScript-->
+        <script src="https://kit.fontawesome.com/42a03310d8.js"></script>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script>window.jQuery || document.write('<script src="https://getbootstrap.com/docs/4.2/assets/js/vendor/jquery-slim.min.js"><\/script>')</script><script src="https://getbootstrap.com/docs/4.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP" crossorigin="anonymous"></script>
     </body>
