@@ -1,0 +1,14 @@
+{% load kewayy_template_tags %}
+
+<div class="form-group">
+    {% for error in field.errors %}
+        <div role="alert" class="alert alert-danger">
+            {{ error }}
+        </div>
+    {% endfor %}
+
+    <label>{{ field.label }}
+        {{ field|add_attributes:"form-control" }}
+    </label>
+    <small class="form-text text-muted">{{ field.help_text }}</small>
+  </div>
