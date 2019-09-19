@@ -18,7 +18,7 @@ def show_story(request, story_slug):
     story = Story.objects.get(slug=story_slug)
     context['story'] = story
     context['test_cases'] = TestCase.objects.filter(story=story)
-    context['create_test_case_form'] = CreateTestCaseForm()
+    context['create_tc_form'] = CreateTestCaseForm()
 
     return render(request, 'kewayy_app/show_story.html', context)
 

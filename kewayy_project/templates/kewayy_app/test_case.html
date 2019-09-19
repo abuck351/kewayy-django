@@ -3,12 +3,19 @@
         <div class="col-sm-12 col-md-2 text-center my-2">
             <p class="lead">#{{ index }}</p>
             <!--Passed?-->
-            {% if test_case.has_passed %}
-                <span class="badge badge-success"><i class="fas fa-check-circle"></i> Passed</span>
-                <br>
+            {% if test_case.has_passed == None %}
+                <!--Hasn't been tested yet-->
+                <span class="badge badge-warning"><i class="fas fa-question-circle"></i> Not tested</span>
             {% else %}
-                <span class="badge badge-danger"><i class="fas fa-times-circle"></i> Failed</span>
-                <br>
+                {% if test_case.has_passed %}
+                    <!--Passed-->
+                    <span class="badge badge-success"><i class="fas fa-check-circle"></i> Passed</span>
+                    <br>
+                {% else %}
+                    <!--Failed-->
+                    <span class="badge badge-danger"><i class="fas fa-times-circle"></i> Failed</span>
+                    <br>
+                {% endif %}
             {% endif %}
 
             <!--Automated?-->
@@ -21,10 +28,10 @@
 
         </div>
         <div class="col">
-            <h5 class="card-title">Criteria:</h5>
+            <h5 class="card-title"><i class="fas fa-clipboard"></i> Criteria:</h5>
             <p>{{ test_case.criteria }}</p>
             <hr>
-            <h6 class="card-title">Notes:</h6>
+            <h6 class="card-title"><i class="fas fa-sticky-note"></i> Notes:</h6>
             <p>Sample notes...</p>
         </div>
     </div>
