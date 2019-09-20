@@ -106,6 +106,8 @@
 
             {% for test_case in test_cases %}
                 {% show_test_case test_case forloop.counter %}
+            {% empty %}
+                <p>There are no Test Cases yet...</p>
             {% endfor %}
 
             <!--Create Test Case Button-->
