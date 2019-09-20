@@ -30,7 +30,7 @@ class TestCase(models.Model):
     
     story = models.ForeignKey(Story, on_delete=models.CASCADE)
 
-    has_passed = models.NullBooleanField(null=True)
+    has_passed = models.NullBooleanField(null=True, blank=True)
     is_automated = models.BooleanField(default=False)
 
     criteria = models.TextField(max_length=criteria_max_length)
