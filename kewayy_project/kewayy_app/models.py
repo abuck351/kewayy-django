@@ -27,15 +27,27 @@ class Story(models.Model):
 class TestCase(models.Model):
     criteria_max_length = 512  # Isn't enforced in the database
     notes_max_length = 256  # Isn't enforced in the database
+    status_choices = (
+        (None, 'Not tested'),
+        (True, 'Passed'),
+        (False, 'Failed')
+    )
     
     story = models.ForeignKey(Story, on_delete=models.CASCADE)
+    position = models.IntegerField(default=0)
 
-    has_passed = models.NullBooleanField(null=True, blank=True)
+    status = models.NullBooleanField(null=True, blank=True, choices=status_choices)
     is_automated = models.BooleanField(default=False)
 
     criteria = models.TextField(max_length=criteria_max_length)
     # tags
     # notes = models.TextField(max_length=notes_max_length)
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            # Only set position when CREATING a TestCase
+            self.position = TestCase.objects.filter(story=self.story).count() + 1
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.criteria

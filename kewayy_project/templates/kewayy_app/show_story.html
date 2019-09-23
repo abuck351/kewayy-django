@@ -1,6 +1,7 @@
 {% extends 'kewayy_app/base.html' %}
 {% load staticfiles %}
 {% load kewayy_template_tags %}
+{% load crispy_forms_tags %}
 {% load widget_tweaks %}
 
 {% block title_block %}
@@ -23,8 +24,12 @@
                         <p>This is the modal's body</p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" name="saveEditedStory">Save</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            <i class="fas fa-window-close"></i> Cancel
+                        </button>
+                        <button type="submit" class="btn btn-primary" name="saveEditedStory">
+                            <i class="fas fa-save"></i> Save
+                        </button>
                     </div>
                 </div>
             </form>
@@ -32,8 +37,7 @@
     </div>
 
     <!--Create Test Case Modal-->
-    <div class="modal fade" id="createTestCaseModal" tabindex="-1" role="dialog" aria-labelledby="createTestCaseModalLabel">
-        
+    <div class="modal fade" id="createTestCaseModal" tabindex="-1" role="dialog" aria-labelledby="createTestCaseModalLabel">        
         <div class="modal-dialog" role="document">
             <form role="form" id="createTestCaseForm" method="POST" action="{% url 'kewayy_app:create_test_case' story.slug %}">
                 {% csrf_token %}
@@ -46,32 +50,15 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        {% for hidden in create_tc_form.hidden_fields %}
-                            {{ hidden }}
-                        {% endfor %}
-
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <!--Is Automated-->
-                                <div class="custom-control custom-checkbox">
-                                    {% render_field create_tc_form.is_automated class="custom-control-input" %}
-                                    <label class="custom-control-label" for="{{ create_tc_form.is_automated.id_for_label }}">
-                                        <i class="fas fa-robot"></i> {{ create_tc_form.is_automated.label }}
-                                    </label>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <!--Criteria-->
-                                <label for="{{ create_tc_form.criteria.id_for_label }}">
-                                    <i class="fas fa-clipboard"></i> {{ create_tc_form.criteria.label }}
-                                </label>
-                                {% render_field create_tc_form.criteria class="form-control" style="width: 100%;" %}
-                            </li>
-                        </ul>
+                        {{ create_tc_form|crispy }}
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary" name="createTestCase">Create</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                            <i class="fas fa-window-close"></i> Cancel
+                        </button>
+                        <button type="submit" class="btn btn-primary" name="createTestCase">
+                            <i class="fas fa-plus"></i> Create
+                        </button>
                     </div>
                 </div>
             </form>
@@ -111,7 +98,7 @@
             {% endfor %}
 
             <!--Create Test Case Button-->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#createTestCaseModal">
+            <button id="createTestCaseButton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#createTestCaseModal">
                 <i class="fas fa-plus"></i> Create Test Case
             </button>
         </div>

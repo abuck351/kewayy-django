@@ -14,9 +14,9 @@ def add_story(name: str, description: str = 'Sample description', reference_url:
     return story
 
 
-def add_test_case(story: Story, criteria: str, has_passed: bool = None, is_automated: bool = False) -> TestCase:
+def add_test_case(story: Story, criteria: str, status: bool = None, is_automated: bool = False) -> TestCase:
     test_case = TestCase.objects.get_or_create(story=story, criteria=criteria)[0]
-    test_case.has_passed = has_passed
+    test_case.status = status
     test_case.is_automated = is_automated
     test_case.save()
     return test_case
@@ -26,17 +26,17 @@ def populate():
     test_cases_351 = [
         {
             'criteria': 'This test case has not been tested',
-            'has_passed': None,
+            'status': None,
             'is_automated': False
         },
         {
             'criteria': 'This test case has passed',
-            'has_passed': True,
+            'status': True,
             'is_automated': False
         },
         {
             'criteria': 'This test case has failed and is automated',
-            'has_passed': False,
+            'status': False,
             'is_automated': True
         }
     ]
@@ -59,7 +59,7 @@ def populate():
     for story in stories:
         s = add_story(story['name'], story['description'], story['reference_url'])
         for test_case in story['test_cases']:
-            tc = add_test_case(s, test_case['criteria'], test_case['has_passed'], test_case['is_automated'])
+            tc = add_test_case(s, test_case['criteria'], test_case['status'], test_case['is_automated'])
     
     for s in Story.objects.all():
         for tc in TestCase.objects.filter(story=s):

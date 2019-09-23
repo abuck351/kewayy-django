@@ -1,0 +1,40 @@
+{% extends 'kewayy_app/base.html' %}
+{% load staticfiles %}
+{% load kewayy_template_tags %}
+{% load crispy_forms_tags %}
+
+{% block title_block %}
+    Test Case {{ test_case.pk }}
+{% endblock %}
+
+{% block body_block %}
+    <div class="row">
+        {% show_story_sidebar test_case.story %}
+        <div class="col-sm col-lg-6 my-3">
+            <a href="{% url 'kewayy_app:show_story' test_case.story.slug %}">
+                <i class="fas fa-arrow-left"></i> Go back to {{ test_case.story }}
+            </a>
+            <h1 class="display-4">Edit Test Case {{ test_case.pk }}</h1>
+
+            <form role="form" method="POST" action=".">
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-sm col-md-6">
+                        {% render_select form.story %}
+                    </div>
+                    <div class="col">
+                        {% render_select form.status %}
+                    </div>
+                </div>
+
+                {{ form.is_automated|as_crispy_field}}
+                {{ form.criteria|as_crispy_field}}
+
+                <!--Submit-->
+                <button type="submit" class="btn btn-primary" name="saveTestCase">
+                    <i class="fas fa-save"></i> Save
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

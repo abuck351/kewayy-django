@@ -13,7 +13,7 @@
                 {% for s in all_stories %}
                     <li class="list-group-item">
                         <a href="{% url 'kewayy_app:show_story' s.slug %}">
-                                <i class="fas fa-book-open"></i> {{ s.name }}
+                            <i class="fas fa-book-open"></i> {{ s.name }}
                         </a>
                     </li>
                 {% endfor %}

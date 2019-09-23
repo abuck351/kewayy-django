@@ -1,13 +1,13 @@
-<div class="card bg-dark text-light p-2 my-3" id="testcase{{ index }}">
+<div class="card bg-dark text-light p-2 my-3" id="testcase{{ test_case.position }}">
     <div class="row">
         <div class="col-sm-12 col-md-2 text-center my-2">
             <p class="lead">#{{ index }}</p>
             <!--Passed?-->
-            {% if test_case.has_passed == None %}
+            {% if test_case.status == None %}
                 <!--Hasn't been tested yet-->
                 <span class="badge badge-warning"><i class="fas fa-question-circle"></i> Not tested</span>
             {% else %}
-                {% if test_case.has_passed %}
+                {% if test_case.status %}
                     <!--Passed-->
                     <span class="badge badge-success"><i class="fas fa-check-circle"></i> Passed</span>
                     <br>
@@ -37,7 +37,7 @@
     </div>
     <div class="card-footer">
         <!--Edit Button-->
-        <a class="btn btn-primary" href="#">
+        <a class="btn btn-primary" href="{% url 'kewayy_app:edit_test_case' test_case.pk %}">
             <i class="fas fa-edit"></i> Edit
         </a>
 

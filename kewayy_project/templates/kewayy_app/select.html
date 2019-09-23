@@ -1,0 +1,7 @@
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+
+<label for="{{ form_field.id_for_label }}">
+    {{ form_field.label }}{% if form_field.field.required %}*{% endif %}
+</label>
+{{ form_field|add_class:'custom-select mb-3' }}
