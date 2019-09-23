@@ -46,7 +46,8 @@ def create_test_case(request, story_slug):
             test_case.story = story  # Assign the story it is part of
             test_case.save()
             print(f'{story} - {test_case.criteria}')
-            return redirect(reverse('kewayy_app:show_story', kwargs={'story_slug': story_slug}))
+            page_position = f'#testcase{test_case.position}'
+            return redirect(reverse('kewayy_app:show_story', kwargs={'story_slug': story_slug}) + page_position)
         else:
             print(form.errors)
 
