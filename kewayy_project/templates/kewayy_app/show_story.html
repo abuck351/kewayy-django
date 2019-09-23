@@ -92,7 +92,7 @@
             </div>
 
             {% for test_case in test_cases %}
-                {% show_test_case test_case forloop.counter %}
+                {% show_test_case test_case %}
             {% empty %}
                 <p>There are no Test Cases yet...</p>
             {% endfor %}

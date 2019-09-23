@@ -11,8 +11,8 @@ def show_story_sidebar(current_story=None):
 
 
 @register.inclusion_tag('kewayy_app/test_case.html')
-def show_test_case(test_case, index: int):
-    return {'test_case': test_case, 'index': index}
+def show_test_case(test_case):
+    return {'test_case': test_case}
 
 
 @register.inclusion_tag('kewayy_app/select.html')

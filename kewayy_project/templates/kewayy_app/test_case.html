@@ -9,7 +9,7 @@
                 </button>
                 <div class="dropdown-menu" aria-labelledby="testcaseDropdown{{ test_case.position }}">
                     <!--Dropdown Header-->
-                    <h6 class="dropdown-header">Test Case {{ index }}</h6>
+                    <h6 class="dropdown-header">Test Case {{ test_case.position }}</h6>
 
                     <!--Edit Button-->
                     <a class="dropdown-item" href="{% url 'kewayy_app:edit_test_case' test_case.pk %}">
