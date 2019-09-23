@@ -1,49 +1,65 @@
 <div class="card bg-dark text-light p-2 my-3" id="testcase{{ test_case.position }}">
     <div class="row">
-        <div class="col-sm-12 col-md-2 text-center my-2">
-            <p class="lead">#{{ index }}</p>
-            <!--Passed?-->
-            {% if test_case.status == None %}
-                <!--Hasn't been tested yet-->
-                <span class="badge badge-warning"><i class="fas fa-question-circle"></i> Not tested</span>
-            {% else %}
-                {% if test_case.status %}
-                    <!--Passed-->
-                    <span class="badge badge-success"><i class="fas fa-check-circle"></i> Passed</span>
-                    <br>
+        <div class="col-sm-12 col-md-2">
+
+            <!--Dropdown Menu-->
+            <div class="dropdown">
+                <button class="btn btn-secondary" type="button" id="testcaseDropdown{{ test_case.position }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-ellipsis-v"></i>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="testcaseDropdown{{ test_case.position }}">
+                    <!--Dropdown Header-->
+                    <h6 class="dropdown-header">Test Case {{ index }}</h6>
+
+                    <!--Edit Button-->
+                    <a class="dropdown-item" href="{% url 'kewayy_app:edit_test_case' test_case.pk %}">
+                        <i class="fas fa-edit"></i> Edit
+                    </a>
+
+                    <div class="dropdown-divider"></div>
+    
+                    <!--Delete Button-->
+                    <a class="dropdown-item" href="#">
+                        <i class="fas fa-trash"></i> Delete
+                    </a>
+                </div>
+            </div>
+
+            <div class="text-center">
+                <!--Passed?-->
+                {% if test_case.status == None %}
+                    <!--Hasn't been tested yet-->
+                    <span class="badge badge-warning"><i class="fas fa-question-circle"></i> Not tested</span>
                 {% else %}
-                    <!--Failed-->
-                    <span class="badge badge-danger"><i class="fas fa-times-circle"></i> Failed</span>
+                    {% if test_case.status %}
+                        <!--Passed-->
+                        <span class="badge badge-success"><i class="fas fa-check-circle"></i> Passed</span>
+                        <br>
+                    {% else %}
+                        <!--Failed-->
+                        <span class="badge badge-danger"><i class="fas fa-times-circle"></i> Failed</span>
+                        <br>
+                    {% endif %}
+                {% endif %}
+
+                <!--Automated?-->
+                {% if test_case.is_automated %}
+                    <span class="badge badge-info"><i class="fas fa-robot"></i> Automated</span>
                     <br>
                 {% endif %}
-            {% endif %}
 
-            <!--Automated?-->
-            {% if test_case.is_automated %}
-                <span class="badge badge-info"><i class="fas fa-robot"></i> Automated</span>
-                <br>
-            {% endif %}
+                <!--Tags-->
+            
+            </div>
 
-            <!--Tags-->
-
+        </div>
+        <div class="col-sm-12 col-md">
+            <h6 class="card-title"><i class="fas fa-clipboard"></i> Criteria</h6>
+            <textarea class="form-control readonly-textarea mb-3" readonly>{{ test_case.criteria }}</textarea>
         </div>
         <div class="col">
-            <h5 class="card-title"><i class="fas fa-clipboard"></i> Criteria:</h5>
-            <p>{{ test_case.criteria }}</p>
-            <hr>
-            <h6 class="card-title"><i class="fas fa-sticky-note"></i> Notes:</h6>
-            <p>Sample notes...</p>
+            <h6 class="card-title"><i class="fas fa-sticky-note"></i> Notes</h6>
+            <textarea class="form-control readonly-textarea mb-3" readonly>Sample notes...</textarea>
         </div>
-    </div>
-    <div class="card-footer">
-        <!--Edit Button-->
-        <a class="btn btn-primary" href="{% url 'kewayy_app:edit_test_case' test_case.pk %}">
-            <i class="fas fa-edit"></i> Edit
-        </a>
-
-        <!--Edit Button-->
-        <a class="btn btn-danger" href="#">
-            <i class="fas fa-trash"></i> Delete
-        </a>
     </div>
 </div>

@@ -11,7 +11,7 @@
     <div class="row">
         {% show_story_sidebar test_case.story %}
         <div class="col-sm col-lg-6 my-3">
-            <a href="{% url 'kewayy_app:show_story' test_case.story.slug %}">
+            <a href="{% url 'kewayy_app:show_story' test_case.story.slug %}#testcase{{ test_case.position }}">
                 <i class="fas fa-arrow-left"></i> Go back to {{ test_case.story }}
             </a>
             <h1 class="display-4">Edit Test Case {{ test_case.pk }}</h1>
