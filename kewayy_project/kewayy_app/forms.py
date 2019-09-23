@@ -4,7 +4,7 @@ from kewayy_app.models import Story, TestCase
 
 class CreateTestCaseForm(forms.ModelForm):
     is_automated = forms.BooleanField(required=False, label='Automated?')
-    criteria = forms.CharField(widget=forms.Textarea, help_text='Please write the criteria for the test case.')
+    criteria = forms.CharField(widget=forms.Textarea(attrs={'rows': 5}), help_text='Please write the criteria for the test case.')
 
     class Meta:
         model = TestCase
@@ -15,7 +15,7 @@ class EditTestCaseForm(forms.ModelForm):
     story = forms.ModelChoiceField(queryset=Story.objects.all(), label="Story")
     status = forms.NullBooleanField(required=False, widget=forms.Select(choices=TestCase.status_choices), label='Test Case Status')
     is_automated = forms.BooleanField(required=False, label='Automated?')
-    criteria = forms.CharField(widget=forms.Textarea, help_text='Please write the criteria for the test case.')
+    criteria = forms.CharField(widget=forms.Textarea(attrs={'rows': 5}), help_text='Please write the criteria for the test case.')
 
     class Meta:
         model = TestCase
