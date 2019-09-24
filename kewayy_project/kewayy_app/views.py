@@ -1,5 +1,6 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
+from django.db.models import F
 from kewayy_app.models import Story, TestCase
 from kewayy_app.forms import CreateTestCaseForm, EditTestCaseForm
 import kewayy_app.forms as kewayy_forms
@@ -56,12 +57,7 @@ def create_test_case(request, story_slug):
 
 
 def edit_test_case(request, test_case_id: int):
-    try:
-        test_case = TestCase.objects.get(pk=test_case_id)
-    except TestCase.DoesNotExist:
-        # Go back to the home page if the Test Case doesn't exist
-        return redirect(reverse('kewayy_app:index'))
-
+    test_case = get_object_or_404(TestCase, pk=test_case_id)
     form = kewayy_forms.EditTestCaseForm(request.POST or None, instance=test_case)
 
     # POST
@@ -79,6 +75,24 @@ def edit_test_case(request, test_case_id: int):
     context['test_case'] = test_case
     context['form'] = form
     return render(request, 'kewayy_app/edit_test_case.html', context)
+
+
+def delete_test_case(request, test_case_id: int):
+    test_case = get_object_or_404(TestCase, pk=test_case_id)
+    test_case.delete()
+
+    # Reorder all the other test cases
+    succeeding_test_cases = TestCase.objects.filter(story=test_case.story).filter(position__gt=test_case.position)
+    for tc in succeeding_test_cases:
+        tc.position = F('position') - 1
+        tc.save()
+
+    # Redirect
+    page_position = ''
+    if TestCase.objects.filter(story=test_case.story).count() > 1:
+        new_position = test_case.position - 1 if test_case.position > 0 else 0
+        page_position = f'#testcase{new_position}'
+    return redirect(reverse('kewayy_app:show_story', kwargs={'story_slug': test_case.story.slug}) + page_position)
 
 
 def create_story(request):
