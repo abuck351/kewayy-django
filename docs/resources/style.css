@@ -1,0 +1,7 @@
+@media (min-width: 500px) {
+    .triple-container {
+        display: inline-grid;
+        grid-template-columns: 33% 33% 33%;
+        grid-column-gap: 15px;
+    }
+}
