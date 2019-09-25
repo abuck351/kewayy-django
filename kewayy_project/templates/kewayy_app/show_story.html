@@ -4,6 +4,10 @@
 {% load crispy_forms_tags %}
 {% load widget_tweaks %}
 
+{% block js_block %}
+    <script src="{% static 'js/delete_confirmation.js' %}"></script>
+{% endblock %}
+
 {% block title_block %}
     {{ story.name }}
 {% endblock %}
@@ -64,6 +68,8 @@
             </form>
         </div>
     </div>
+
+    {% include 'kewayy_app/delete_test_case_confirmation_modal.html' %}
 
     <div class="row">
         <!--Story Sidebar-->

@@ -3,11 +3,17 @@
 {% load kewayy_template_tags %}
 {% load crispy_forms_tags %}
 
+{% block js_block %}
+    <script src="{% static 'js/delete_confirmation.js' %}"></script>
+{% endblock %}
+
 {% block title_block %}
     Test Case {{ test_case.pk }}
 {% endblock %}
 
 {% block body_block %}
+    {% include 'kewayy_app/delete_test_case_confirmation_modal.html' %}
+
     <div class="row">
         {% show_story_sidebar test_case.story %}
         <div class="col-sm col-lg-6 my-3">
@@ -39,9 +45,9 @@
 
             <hr>
             <!--Delete Button-->
-            <a class="btn btn-danger" href="{% url 'kewayy_app:delete_test_case' test_case.pk %}">
+            <button class="btn btn-danger" data-toggle="modal" data-target="#confirmDeleteModal" data-testcasehref="{% url 'kewayy_app:delete_test_case' test_case.pk %}" data-testcasecriteria="{{ test_case.criteria }}">
                 <i class="fas fa-trash"></i> Delete
-            </a>
+            </button>
         </div>
     </div>
 {% endblock %}
