@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.db.models import F
 from kewayy_app.models import Story, TestCase
-from kewayy_app.forms import CreateTestCaseForm, EditTestCaseForm
+from kewayy_app.forms import CreateTestCaseForm, EditTestCaseForm, EditStoryForm
 import kewayy_app.forms as kewayy_forms
 
 
@@ -13,14 +13,24 @@ def index(request):
 
 
 def show_story(request, story_slug):
-    context = {}
+    story = get_object_or_404(Story, slug=story_slug)
+    edit_story_form = kewayy_forms.EditStoryForm(request.POST or None, instance=story)
 
-    # Try to show the Story, except Story.DoesNotExist
-    # context['story_slug'] = story_slug
-    story = Story.objects.get(slug=story_slug)
+    # POST
+    if request.method == 'POST':
+        if edit_story_form.is_valid():
+            saved_story = edit_story_form.save()
+            print(f'Updated Story {story_slug}')
+            return redirect(reverse('kewayy_app:show_story', kwargs={'story_slug': saved_story.slug}))
+        else:
+            print(edit_story_form.errors)
+
+    # GET
+    context = {}
     context['story'] = story
     context['test_cases'] = TestCase.objects.filter(story=story).order_by('position')
     context['create_tc_form'] = kewayy_forms.CreateTestCaseForm()
+    context['edit_story_form'] = edit_story_form
 
     return render(request, 'kewayy_app/show_story.html', context)
 

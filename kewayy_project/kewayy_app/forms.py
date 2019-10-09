@@ -20,3 +20,10 @@ class EditTestCaseForm(forms.ModelForm):
     class Meta:
         model = TestCase
         fields = ('story', 'status', 'is_automated', 'criteria')
+
+
+class EditStoryForm(forms.ModelForm):
+    
+    class Meta:
+        model = Story
+        exclude = ('slug',)
