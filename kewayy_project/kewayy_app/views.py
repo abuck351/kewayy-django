@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
 from django.db.models import F
 from kewayy_app.models import Story, TestCase
-from kewayy_app.forms import CreateTestCaseForm, EditTestCaseForm, EditStoryForm
+from kewayy_app.forms import CreateTestCaseForm, EditTestCaseForm, CreateStoryForm, EditStoryForm
 import kewayy_app.forms as kewayy_forms
 
 
@@ -56,7 +56,7 @@ def create_test_case(request, story_slug):
             test_case = form.save(commit=False)
             test_case.story = story  # Assign the story it is part of
             test_case.save()
-            print(f'{story} - {test_case.criteria}')
+            print(f'Created testcase - {test_case.criteria} in {story}')
             page_position = f'#testcase{test_case.position}'
             return redirect(reverse('kewayy_app:show_story', kwargs={'story_slug': story_slug}) + page_position)
         else:
@@ -106,4 +106,21 @@ def delete_test_case(request, test_case_id: int):
 
 
 def create_story(request):
-    pass
+    create_story_form = kewayy_forms.CreateStoryForm()
+    
+    # POST
+    if request.method == 'POST':
+        form = kewayy_forms.CreateStoryForm(request.POST)
+        if form.is_valid():
+            saved_story = form.save(commit=True)
+            print(f'Created Story {saved_story.slug}')
+            return redirect(reverse('kewayy_app:show_story', kwargs={'story_slug': saved_story.slug}))
+        else:
+            print(form.errors)
+    
+    # GET
+    context = {}
+    context['form'] = create_story_form
+    return render(request, 'kewayy_app/create_story.html', context)
+
+

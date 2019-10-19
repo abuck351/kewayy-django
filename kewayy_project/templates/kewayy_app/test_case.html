@@ -29,6 +29,7 @@
                 {% if test_case.status == None %}
                     <!--Hasn't been tested yet-->
                     <span class="badge badge-warning"><i class="fas fa-question-circle"></i> Not tested</span>
+                    <br>
                 {% else %}
                     {% if test_case.status %}
                         <!--Passed-->

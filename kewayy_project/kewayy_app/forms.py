@@ -22,6 +22,12 @@ class EditTestCaseForm(forms.ModelForm):
         fields = ('story', 'status', 'is_automated', 'criteria')
 
 
+class CreateStoryForm(forms.ModelForm):
+
+    class Meta:
+        model = Story
+        exclude = ('slug',)
+
 class EditStoryForm(forms.ModelForm):
     
     class Meta:

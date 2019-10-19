@@ -1,0 +1,43 @@
+{% extends 'kewayy_app/base.html' %}
+{% load staticfiles %}
+{% load kewayy_template_tags %}
+{% load crispy_forms_tags %}
+
+{% block title_block %}
+    Create Story
+{% endblock %}
+
+{% block body_block %}
+
+    <div class="row">
+        {% show_story_sidebar test_case.story %}
+        <div class="col-sm col-lg-6 my-3">
+            <h1 class="display-4">Create Story</h1>
+            <form role="form" method="POST" action=".">
+                {% csrf_token %}
+
+                {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <div class="alert alert-danger">
+                                <strong>{{ error|escape }}</strong>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endif %}               
+        
+                {{ form|crispy }}
+        
+                <button type="submit" class="btn btn-primary" name="createStory">
+                    <i class="fas fa-save"></i> Save
+                </button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
