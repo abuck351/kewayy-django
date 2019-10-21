@@ -26,21 +26,24 @@
 
             <div class="text-center">
                 <!--Passed?-->
-                {% if test_case.status == None %}
-                    <!--Hasn't been tested yet-->
-                    <span class="badge badge-warning"><i class="fas fa-question-circle"></i> Not tested</span>
-                    <br>
-                {% else %}
-                    {% if test_case.status %}
-                        <!--Passed-->
-                        <span class="badge badge-success"><i class="fas fa-check-circle"></i> Passed</span>
-                        <br>
-                    {% else %}
-                        <!--Failed-->
-                        <span class="badge badge-danger"><i class="fas fa-times-circle"></i> Failed</span>
-                        <br>
-                    {% endif %}
-                {% endif %}
+                <form role="form" method="POST" action="{% url 'kewayy_app:change_test_case_status' test_case.pk %}">
+                    {% csrf_token %}
+
+                    <button class="btn btn-sm" type="submit" name="updateTestCaseStatus">
+                        {% if test_case.status == None %}
+                            <!--Hasn't been tested yet-->
+                            <span class="badge badge-warning"><i class="fas fa-question-circle"></i> Not tested</span><br>
+                        {% else %}
+                            {% if test_case.status %}
+                                <!--Passed-->
+                                <span class="badge badge-success"><i class="fas fa-check-circle"></i> Passed</span><br>
+                            {% else %}
+                                <!--Failed-->
+                                <span href="#" class="badge badge-danger"><i class="fas fa-times-circle"></i> Failed</span><br>
+                            {% endif %}
+                        {% endif %}
+                    </button>
+                </form>
 
                 <!--Automated?-->
                 {% if test_case.is_automated %}

@@ -11,5 +11,6 @@ urlpatterns = [
     path('stories/<slug:story_slug>/', views.show_story, name='show_story'),
     path('stories/<slug:story_slug>/create_test_case/', views.create_test_case, name='create_test_case'),
     path('test_case/<int:test_case_id>/edit/', views.edit_test_case, name='edit_test_case'),
+    path('test_case/<int:test_case_id>/change_status/', views.change_test_case_status, name="change_test_case_status"),
     path('test_case/<int:test_case_id>/delete/', views.delete_test_case, name='delete_test_case'),
 ]

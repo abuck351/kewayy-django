@@ -87,6 +87,22 @@ def edit_test_case(request, test_case_id: int):
     return render(request, 'kewayy_app/edit_test_case.html', context)
 
 
+def change_test_case_status(request, test_case_id: int):
+    tc = get_object_or_404(TestCase, pk=test_case_id)
+
+    # POST
+    if request.method == 'POST':
+        print(tc.status)
+        tc.status = True if tc.status is None or tc.status == False else False
+        tc.save()
+        print(f'Updated Test Case Status {tc.pk}')
+        # Redirect below
+    
+    # Shouldn't be able to GET to this page (Only for POST)
+    page_position = f'#testcase{tc.position}'
+    return redirect(reverse('kewayy_app:show_story', kwargs={'story_slug': tc.story.slug}) + page_position)
+
+
 def delete_test_case(request, test_case_id: int):
     test_case = get_object_or_404(TestCase, pk=test_case_id)
     test_case.delete()
