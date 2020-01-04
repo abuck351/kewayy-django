@@ -28,6 +28,7 @@ class CreateStoryForm(forms.ModelForm):
         model = Story
         exclude = ('slug',)
 
+
 class EditStoryForm(forms.ModelForm):
     
     class Meta:

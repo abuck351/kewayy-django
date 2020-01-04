@@ -19,7 +19,15 @@ class Story(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)
         super().save(*args, **kwargs)
-    
+
+    @property
+    def number_of_test_cases(self):
+        return TestCase.objects.filter(story=self).count()
+
+    @property
+    def last_test_case_index(self):
+        return self.number_of_test_cases - 1
+        
     def __str__(self):
         return self.name
 
@@ -46,7 +54,7 @@ class TestCase(models.Model):
     def save(self, *args, **kwargs):
         if not self.pk:
             # Only set position when CREATING a TestCase
-            self.position = TestCase.objects.filter(story=self.story).count() + 1
+            self.position = TestCase.objects.filter(story=self.story).count()
         super().save(*args, **kwargs)
 
     def __str__(self):

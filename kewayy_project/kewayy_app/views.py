@@ -4,6 +4,7 @@ from django.db.models import F
 from kewayy_app.models import Story, TestCase
 from kewayy_app.forms import CreateTestCaseForm, EditTestCaseForm, CreateStoryForm, EditStoryForm
 import kewayy_app.forms as kewayy_forms
+import kewayy_app.views_helper as helper
 
 
 def index(request):
@@ -99,26 +100,39 @@ def change_test_case_status(request, test_case_id: int):
         # Redirect below
     
     # Shouldn't be able to GET to this page (Only for POST)
-    page_position = f'#testcase{tc.position}'
-    return redirect(reverse('kewayy_app:show_story', kwargs={'story_slug': tc.story.slug}) + page_position)
+    position_redirect = f'#testcase{tc.position}'
+    return redirect(reverse('kewayy_app:show_story', kwargs={'story_slug': tc.story.slug}) + position_redirect)
+
+
+def change_test_case_position(request, test_case_id: int, direction: str):
+    """
+    Direction: 1 (Down) or -1 (Up).
+    """
+    # TODO: Make direction an int (look into custom path converters in order to pass negatives)
+    tc = get_object_or_404(TestCase, pk=test_case_id)
+
+    #POST
+    if request.method == 'POST':
+        print(tc.position)
+        position = helper.swap_test_case_positions(tc, int(direction))
+        position_redirect = f'#testcase{position}'
+        return redirect(reverse('kewayy_app:show_story', kwargs={'story_slug': tc.story.slug}) + position_redirect)
+    
+    # Shouldn't be able to GET to this page (Only for POST)
+    position_redirect = f'#testcase{tc.position}'
+    return redirect(reverse('kewayy_app:show_story', kwargs={'story_slug': tc.story.slug}) + position_redirect)
 
 
 def delete_test_case(request, test_case_id: int):
     test_case = get_object_or_404(TestCase, pk=test_case_id)
-    test_case.delete()
-
-    # Reorder all the other test cases
-    succeeding_test_cases = TestCase.objects.filter(story=test_case.story).filter(position__gt=test_case.position)
-    for tc in succeeding_test_cases:
-        tc.position = F('position') - 1
-        tc.save()
+    
+    position = helper.delete_test_case(test_case)
 
     # Redirect
-    page_position = ''
-    if TestCase.objects.filter(story=test_case.story).count() > 1:
-        new_position = test_case.position - 1 if test_case.position > 0 else 0
-        page_position = f'#testcase{new_position}'
-    return redirect(reverse('kewayy_app:show_story', kwargs={'story_slug': test_case.story.slug}) + page_position)
+    position_redirect = ''
+    if test_case.story.number_of_test_cases > 1:
+        position_redirect = f'#testcase{position}'
+    return redirect(reverse('kewayy_app:show_story', kwargs={'story_slug': test_case.story.slug}) + position_redirect)    
 
 
 def create_story(request):

@@ -17,6 +17,26 @@
                     </a>
 
                     <div class="dropdown-divider"></div>
+
+                    {% if test_case.position > 0 %}
+                        <form role="form" method="POST" action="{% url 'kewayy_app:change_test_case_position' test_case.pk '-1' %}">
+                            {% csrf_token %}
+                            <button class="dropdown-item">
+                                <i class="fas fa-chevron-up"></i> Move Up
+                            </button>
+                        </form>
+                    {% endif %}
+
+                    {% if test_case.position < test_case.story.last_test_case_index %}
+                        <form role="form" method="POST" action="{% url 'kewayy_app:change_test_case_position' test_case.pk '1' %}">
+                            {% csrf_token %}
+                            <button class="dropdown-item">
+                                <i class="fas fa-chevron-down"></i> Move Down
+                            </button>
+                        </form>
+                    {% endif %}
+
+                    <div class="dropdown-divider"></div>
     
                     <button class="dropdown-item" data-toggle="modal" data-target="#confirmDeleteModal" data-testcasehref="{% url 'kewayy_app:delete_test_case' test_case.pk %}" data-testcasecriteria="{{ test_case.criteria }}">
                         <i class="fas fa-trash"></i> Delete
